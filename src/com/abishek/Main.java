@@ -1,14 +1,15 @@
 package com.abishek;
 
-//Importing all necessary packages
+// Importing all necessary packages
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.FlowLayout;
-import java.sql.*;
-import javax.swing.*;
-import java.time.LocalDate;
+import java.awt.event.*;
 import java.lang.Math;
+import java.sql.*;
+import java.time.LocalDate;
+import javax.swing.*;
+
 
 public class Main extends JFrame implements ActionListener {
     // declaring all necessary variables
@@ -18,15 +19,16 @@ public class Main extends JFrame implements ActionListener {
     static Statement st1, st2, st3, st4;
     static ResultSet rs1;
     int numD, numF, numE;
-    LocalDate today = LocalDate.now(); // to get system date
-    String date = today.toString(); // converting object to string
+    LocalDate today = LocalDate.now();  // to get system date
+    String date = today.toString();     // converting object to string
 
     public Main() {
         super("DAB Bank");
         setLayout(new FlowLayout());
         try {
             // Checking connection with database
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+            Connection con =
+                DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
             System.out.println("Connection established");
             st1 = con.createStatement();
             rs1 = st1.executeQuery("select * from details");
@@ -128,15 +130,16 @@ public class Main extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == create) {
-            int rand = (int) (Math.random() * 9000 + 1000);// to generate random number
+            int rand = (int)(Math.random() * 9000 + 1000);  // to generate random number
             String strB = "" + rand;
             String strA = JOptionPane.showInputDialog(null, "Please Enter Your NAME:");
             String strC = JOptionPane.showInputDialog(null, "Please Enter Your PASSWORD:");
             String strD = JOptionPane.showInputDialog(null, "Please Re-Enter Your PASSWORD:");
 
-            if (!(strC.equals(strD)))// continues if both password is same
+            if (!(strC.equals(strD)))  // continues if both password is same
             {
-                JOptionPane.showMessageDialog(null, "Sorry Cannot Create Account!!!!\nYour Password is Incorrect");
+                JOptionPane.showMessageDialog(
+                    null, "Sorry Cannot Create Account!!!!\nYour Password is Incorrect");
 
                 deposit.setEnabled(false);
                 withdraw.setEnabled(false);
@@ -146,10 +149,11 @@ public class Main extends JFrame implements ActionListener {
                 sign.setEnabled(true);
                 signOut.setEnabled(false);
 
-            } else if (strA == null)// continues if all the values are not left blank
+            } else if (strA == null)  // continues if all the values are not left blank
             {
-                JOptionPane.showMessageDialog(null,
-                        "Sorry Cannot Create Account!!!!\nEither any one or both the values were left blank");
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Sorry Cannot Create Account!!!!\nEither any one or both the values were left blank");
 
                 deposit.setEnabled(false);
                 withdraw.setEnabled(false);
@@ -160,20 +164,23 @@ public class Main extends JFrame implements ActionListener {
                 signOut.setEnabled(false);
             } else {
                 try {
-                    Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                    Connection con = DriverManager.getConnection(
+                        "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
                     st2 = con.createStatement();
-                    st2.executeUpdate("insert into details(UserName,AccNum,Password,Balance,Deposit,Withdraw)values('"
-                            + strA + "','" + strB + "','" + strD + "',0,0,0)");
+                    st2.executeUpdate(
+                        "insert into details(UserName,AccNum,Password,Balance,Deposit,Withdraw)values('" +
+                        strA + "','" + strB + "','" + strD + "',0,0,0)");
                     st2.close();
-                    JOptionPane.showMessageDialog(null,
-                            "ACCOUNT Created Successfully\nNew Account details:\nAccount Number:" + strB + "\nUsername:"
-                                    + strA +
-                                    "\nBalance:0");
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "ACCOUNT Created Successfully\nNew Account details:\nAccount Number:" +
+                            strB + "\nUsername:" + strA + "\nBalance:0");
                 } catch (Exception e2) {
-                    JOptionPane.showMessageDialog(null,
-                            " There is already a user with same ACCOUNT NUMBER ,Give another ACCOUNT NUMBER ");
+                    JOptionPane.showMessageDialog(
+                        null,
+                        " There is already a user with same ACCOUNT NUMBER ,Give another ACCOUNT NUMBER ");
                 }
-                rand = (int) (Math.random() * 9000 + 1000);
+                rand = (int)(Math.random() * 9000 + 1000);
                 label3.setEnabled(false);
                 deposit.setEnabled(false);
                 withdraw.setEnabled(false);
@@ -188,10 +195,11 @@ public class Main extends JFrame implements ActionListener {
             String pwd = txtA3.getText();
             String name = txtA2.getText();
             try {
-                Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                Connection con = DriverManager.getConnection(
+                    "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
                 st1 = con.createStatement();
-                rs1 = st1.executeQuery("Select * from details where (AccNum='" + num + "' AND Password='" + pwd
-                        + "' AND UserName='" + name + "')");
+                rs1 = st1.executeQuery("Select * from details where (AccNum='" + num +
+                                       "' AND Password='" + pwd + "' AND UserName='" + name + "')");
                 rs1.next();
                 txtA1.setText(rs1.getString("AccNum"));
                 txtA2.setText(rs1.getString("UserName"));
@@ -209,7 +217,8 @@ public class Main extends JFrame implements ActionListener {
                 clear.setEnabled(true);
                 delete.setEnabled(true);
             } catch (Exception e2) {
-                JOptionPane.showMessageDialog(null, "Invalid Password or Invalid Account Number or Invalid UserName");
+                JOptionPane.showMessageDialog(
+                    null, "Invalid Password or Invalid Account Number or Invalid UserName");
                 label3.setEnabled(false);
                 deposit.setEnabled(false);
                 withdraw.setEnabled(false);
@@ -237,32 +246,40 @@ public class Main extends JFrame implements ActionListener {
             signOut.setEnabled(false);
             delete.setEnabled(false);
         } else if (e.getSource() == deposit) {
-            String strC = JOptionPane.showInputDialog(null, "Please enter the amount to be DEPOSITED");
+            String strC =
+                JOptionPane.showInputDialog(null, "Please enter the amount to be DEPOSITED");
             numD = Integer.parseInt(strC);
             if (numD <= 0) {
                 JOptionPane.showMessageDialog(null, " NO Amount Deposited");
             } else {
                 try {
-                    Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                    Connection con = DriverManager.getConnection(
+                        "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
                     int num, num1;
                     st3 = con.createStatement();
-                    rs1 = st3.executeQuery("select * from details where Accnum like '" + txtA1.getText() + "'");
+                    rs1 = st3.executeQuery("select * from details where Accnum like '" +
+                                           txtA1.getText() + "'");
                     rs1.next();
                     num1 = rs1.getInt("Deposit");
                     num = rs1.getInt("Balance");
 
-                    JOptionPane.showMessageDialog(null, "Amount Deposited Successfully , Amount is " + numD);
+                    JOptionPane.showMessageDialog(
+                        null, "Amount Deposited Successfully , Amount is " + numD);
                     numF = num + numD;
                     num1 = num1 + numD;
                     st2 = con.createStatement();
-                    String ss = "update details set Deposit=" + num1 + " where AccNum='" + txtA1.getText() + "'";
-                    String aa = "update details set Balance=" + numF + " where AccNum='" + txtA1.getText() + "'";
+                    String ss = "update details set Deposit=" + num1 + " where AccNum='" +
+                                txtA1.getText() + "'";
+                    String aa = "update details set Balance=" + numF + " where AccNum='" +
+                                txtA1.getText() + "'";
                     st2.executeUpdate(ss);
                     st2.executeUpdate(aa);
                     st2.close();
                     st4 = con.createStatement();
-                    st4.executeUpdate("insert into transactions(Tdate,UserName,AccNum,Withdraw,Deposit) values('" + date
-                            + "','" + txtA2.getText() + "','" + txtA1.getText() + "',0," + numD + ")");
+                    st4.executeUpdate(
+                        "insert into transactions(Tdate,UserName,AccNum,Withdraw,Deposit) values('" +
+                        date + "','" + txtA2.getText() + "','" + txtA1.getText() + "',0," + numD +
+                        ")");
                     st4.close();
                 } catch (Exception e2) {
                     JOptionPane.showMessageDialog(null, "Amount can not be DEPOSITED");
@@ -271,11 +288,14 @@ public class Main extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == withdraw) {
             try {
-                Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
-                String strD = JOptionPane.showInputDialog(null, "Please enter the amount to be WITHDRAWN");
+                Connection con = DriverManager.getConnection(
+                    "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                String strD =
+                    JOptionPane.showInputDialog(null, "Please enter the amount to be WITHDRAWN");
                 numE = Integer.parseInt(strD);
                 st3 = con.createStatement();
-                rs1 = st3.executeQuery("select * from details where Accnum like '" + txtA1.getText() + "'");
+                rs1 = st3.executeQuery("select * from details where Accnum like '" +
+                                       txtA1.getText() + "'");
                 rs1.next();
                 numF = rs1.getInt("Balance");
                 if ((numF > numE) && (numE > 100)) {
@@ -285,18 +305,22 @@ public class Main extends JFrame implements ActionListener {
                     numF = numF - numE;
                     num1 = num1 + numE;
                     st2 = con.createStatement();
-                    String pp = "update details set Withdraw=" + num1 + " where AccNum='" + txtA1.getText() + "'";
-                    String pp1 = "update details set Balance=" + numF + " where AccNum='" + txtA1.getText() + "'";
+                    String pp = "update details set Withdraw=" + num1 + " where AccNum='" +
+                                txtA1.getText() + "'";
+                    String pp1 = "update details set Balance=" + numF + " where AccNum='" +
+                                 txtA1.getText() + "'";
                     st2.executeUpdate(pp);
                     st2.executeUpdate(pp1);
                     st2.close();
                     st4 = con.createStatement();
-                    st4.executeUpdate("insert into transactions(Tdate,UserName,AccNum,Withdraw,Deposit) values('" + date
-                            + "','" + txtA2.getText() + "','" + txtA1.getText() + "'," + numE + ",0)");
+                    st4.executeUpdate(
+                        "insert into transactions(Tdate,UserName,AccNum,Withdraw,Deposit) values('" +
+                        date + "','" + txtA2.getText() + "','" + txtA1.getText() + "'," + numE +
+                        ",0)");
                     st4.close();
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Sorry can not Withdraw\nAvailable Denominations 100,200,500,2000");
+                    JOptionPane.showMessageDialog(
+                        null, "Sorry can not Withdraw\nAvailable Denominations 100,200,500,2000");
                 }
                 st3.close();
             } catch (Exception e2) {
@@ -306,7 +330,8 @@ public class Main extends JFrame implements ActionListener {
             String num = txtA1.getText();
 
             try {
-                Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                Connection con = DriverManager.getConnection(
+                    "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
                 st3 = con.createStatement();
                 rs1 = st3.executeQuery("select * from details where Accnum like '" + num + "'");
                 rs1.next();
@@ -321,9 +346,11 @@ public class Main extends JFrame implements ActionListener {
 
             try {
                 String num = txtA1.getText();
-                Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                Connection con = DriverManager.getConnection(
+                    "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
                 st3 = con.createStatement();
-                rs1 = st3.executeQuery("select * from transactions where AccNum like '" + num + "'");
+                rs1 =
+                    st3.executeQuery("select * from transactions where AccNum like '" + num + "'");
                 while (rs1.next()) {
                     String tDate = rs1.getString("Tdate");
                     String uname = rs1.getString("UserName");
@@ -331,13 +358,13 @@ public class Main extends JFrame implements ActionListener {
                     int w = rs1.getInt("Withdraw");
                     int d = rs1.getInt("Deposit");
                     if (w > 0 && d == 0)
-                        JOptionPane.showMessageDialog(null,
-                                "Transaction Date:  " + tDate + "\nUsername:  " + uname + "\nAccount Number:  " + aNum
-                                        + "\nWithdraw amount:  " + w);
+                        JOptionPane.showMessageDialog(
+                            null, "Transaction Date:  " + tDate + "\nUsername:  " + uname +
+                                      "\nAccount Number:  " + aNum + "\nWithdraw amount:  " + w);
                     else
-                        JOptionPane.showMessageDialog(null,
-                                "Transaction Date:" + tDate + "\nUsername:" + uname + "\nAccount Number:" + aNum
-                                        + "\nDeposit amount:  " + d);
+                        JOptionPane.showMessageDialog(
+                            null, "Transaction Date:" + tDate + "\nUsername:" + uname +
+                                      "\nAccount Number:" + aNum + "\nDeposit amount:  " + d);
                 }
                 st3.close();
             } catch (Exception e3) {
@@ -345,12 +372,14 @@ public class Main extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == delete) {
             try {
-                Connection con = DriverManager.getConnection("jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
+                Connection con = DriverManager.getConnection(
+                    "jdbc:ucanaccess://D:\\JavaProject\\ABD_Bank.accdb");
                 st4 = con.createStatement();
                 st4.executeUpdate("delete from details where AccNum='" + txtA1.getText() + "'");
                 st4.close();
                 st3 = con.createStatement();
-                st3.executeUpdate("delete from transactions where AccNum='" + txtA1.getText() + "'");
+                st3.executeUpdate("delete from transactions where AccNum='" + txtA1.getText() +
+                                  "'");
                 st3.close();
                 JOptionPane.showMessageDialog(null, "Your Account deleted Successfully");
                 txtA1.setText("");
@@ -388,7 +417,5 @@ public class Main extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        new Main();
-    }
+    public static void main(String[] args) { new Main(); }
 }
