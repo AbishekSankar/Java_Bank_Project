@@ -1,0 +1,10 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "JDBC Drivers/commons-lang3-3.8.1.jar",
+        "JDBC Drivers/commons-logging-1.2.jar",
+        "JDBC Drivers/hsqldb-2.5.0.jar",
+        "JDBC Drivers/jackcess-3.0.1.jar",
+        "JDBC Drivers/ucanaccess-5.0.1.jar"
+    ]
+}
